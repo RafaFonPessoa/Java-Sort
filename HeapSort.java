@@ -1,21 +1,27 @@
 public class Main {
     public static void main(String[] args) {
-        HeapSort hs = new HeapSort();
+        HeapSort<Integer> hs = new HeapSort<>();
+        HeapSort<Character> sh = new HeapSort<>();
 
-        int array[] = {3, 5, 8, 9, 4, 6, 2, 1, 7, 10};
+        Integer[] array = {3, 5, 8, 9, 4, 6, 2, 1, 7, 10};
+        Character[] yarra = {'d', 'f', 'a', 'e', 'c', 'b'};
 
         int n = array.length;
+        int m = yarra.length;
 
         hs.sort(array);
+        sh.sort(yarra);
 
         System.out.println("O Seu array: ");
         hs.print(array);
+        System.out.println(" ");
+        sh.print(yarra);
     }
 }
 
-class HeapSort {
+class HeapSort<T extends Comparable<T>> {
     //Vai ordenar o array
-    public void sort(int arr[]){
+    public void sort(T arr[]){
         int n = arr.length;
 
         //Constroi o Heap
@@ -28,7 +34,7 @@ class HeapSort {
         for(int i = n - 1; i > 0; i--)
         {
             //Move a raiz para o final
-            int temp = arr[0];
+            T temp = arr[0];
             arr[0] = arr[i];
             arr[i] = temp;
 
@@ -38,19 +44,19 @@ class HeapSort {
     }
 
     // Para empilhar uma subárvore enraizada com o nó i que é  um índice em arr[]. n é o tamanho do heap
-    void heap(int arr[], int n, int i){
+    void heap(T arr[], int n, int i){
         int largest = i; //inicia o largest como root
         int l = 2 * i + 1 ; //left
         int r = 2 * i + 2; //right
 
         // se o filho de left for maior que a raiz
-        if(l < n && arr[l] > arr[largest])
+        if(l < n && arr[l].compareTo(arr[largest]) > 0)
         {
             largest = l;
         }
 
         //Se o filho de right for maior que o largest
-        if(r < n && arr[r] > arr[largest])
+        if(r < n && arr[r].compareTo(arr[largest]) > 0)
         {
             largest = r;
         }
@@ -58,7 +64,7 @@ class HeapSort {
         //Se o largest não é uma raiz
         if(largest != i)
         {
-            int swap = arr[i];
+            T swap = arr[i];
             arr[i] = arr[largest];
             arr[largest] = swap;
 
@@ -66,7 +72,7 @@ class HeapSort {
         }
     }
 
-    static void print(int arr[]){
+    static <T> void print(T arr[]){
         int n = arr.length;
 
         for(int i = 0; i < n; i++)
